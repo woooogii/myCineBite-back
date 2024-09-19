@@ -42,10 +42,15 @@ public class MovieListService {
 
     public Optional<List<MovieDetailEntity>> getMovieGenres(List<Genre> genres) {
         try {
+            int genresCount = genres.size();
+            // name 만 꺼내서 list 담기
             List<String> genreNames = genres.stream()
                     .map(Genre::getName)
                     .collect(Collectors.toList());
-            Optional<List<MovieDetailEntity>> genresList = movieDetailRepository.findByGenres(genreNames);
+
+            System.out.println("서비스 장르 이름: " + genreNames);// [장르1, 장르2, ...]
+
+            Optional<List<MovieDetailEntity>> genresList = movieDetailRepository.findByGenres(genreNames, genresCount);
             log.info("장르별 영화 조회 성공");
             return genresList;
         } catch (Exception e) {

@@ -15,8 +15,14 @@ public interface MovieDetailRepository extends JpaRepository<MovieDetailEntity, 
 
     Optional<MovieDetailEntity> findByMovieId(int movieId);
 
-    @Query("SELECT md FROM movie_details md JOIN md.genres g WHERE g.name IN :genres")
-    Optional<List<MovieDetailEntity>> findByGenres(@Param("genres") List<String> genres);
+    @Query("SELECT MD FROM movie_details MD JOIN MD.genres MG WHERE MG.name IN :genres GROUP BY MD.movieId HAVING COUNT(DISTINCT MG.name) = :genresCount ORDER BY popularity DESC")
+    Optional<List<MovieDetailEntity>> findByGenres(@Param("genres") List<String> genres,
+            @Param("genresCount") int genresCount);
+
+    // @Query("SELECT md FROM movie_details md JOIN md.genres g WHERE g.name IN
+    // :genres")
+    // Optional<List<MovieDetailEntity>> findByGenres(@Param("genres") List<String>
+    // genres);
 
     @Query("SELECT md FROM movie_details md JOIN md.credits.cast c WHERE c.name = :actor")
     Optional<List<MovieDetailEntity>> findByActors(@Param("actor") String actor);

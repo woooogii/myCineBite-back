@@ -40,7 +40,7 @@ public class MovieDetailService {
     public List<Movie> fetchAllMovies() {
         List<Movie> allMovies = new ArrayList<>();
 
-        for (int page = 1; page <= 1; page++) {
+        for (int page = 1; page <= 10; page++) {
             try {
                 MovieResponse allMovieResponse = movieConfig.fetchMovieList(page);
                 if (allMovieResponse != null) {

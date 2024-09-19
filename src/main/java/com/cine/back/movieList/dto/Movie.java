@@ -18,6 +18,7 @@ public class Movie {
     private int movieId;
 
     private List<Genre> genres;
+    private List<Countries> countries;
 
     @Column(name = "fresh_count")
     private int freshCount;

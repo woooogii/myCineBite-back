@@ -68,7 +68,7 @@ public class MovieListController implements MovieListControllerDocs {
         return ResponseEntity.ok().body(movieDetail);
     }
 
-    // 영화명, 배우, 장르로 검색
+    // 키워드별 추천
     @GetMapping("/search/{keyword}")
     public ResponseEntity<List<MovieDetailEntity>> searchByKeyword(@PathVariable(value = "keyword") String keyword) {
         log.info("영화 검색 컨트롤러 실행 - 키워드: {}", keyword);
