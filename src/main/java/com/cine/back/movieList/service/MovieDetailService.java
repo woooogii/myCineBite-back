@@ -40,7 +40,7 @@ public class MovieDetailService {
     public List<Movie> fetchAllMovies() {
         List<Movie> allMovies = new ArrayList<>();
 
-        for (int page = 1; page <= 10; page++) {
+        for (int page = 1; page <= 1; page++) {
             try {
                 MovieResponse allMovieResponse = movieConfig.fetchMovieList(page);
                 if (allMovieResponse != null) {
@@ -63,7 +63,7 @@ public class MovieDetailService {
                     MovieDetailEntity movieDetails = movieConfig.fetchMovieDetails(movie.getMovieId());
                     if (movieDetails != null) {
                         saveMovieDetail(movieDetails);
-                        log.info("영화 ID {} 상세 정보 저장 성공", movie.getMovieId());
+                        // log.info("영화 ID {} 상세 정보 저장 성공", movie.getMovieId());
                     }
                 } catch (Exception e) {
                     log.error("에러 - api 영화 상세 데이터 조회 실패", movie.getMovieId(), e);

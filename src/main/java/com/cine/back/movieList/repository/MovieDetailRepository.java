@@ -11,29 +11,24 @@ import com.cine.back.movieList.entity.MovieDetailEntity;
 
 public interface MovieDetailRepository extends JpaRepository<MovieDetailEntity, Integer> {
 
-    Optional<List<MovieDetailEntity>> findAllByOrderByPopularityAsc();
+        Optional<List<MovieDetailEntity>> findAllByOrderByPopularityAsc();
 
-    Optional<MovieDetailEntity> findByMovieId(int movieId);
+        Optional<MovieDetailEntity> findByMovieId(int movieId);
 
-    @Query("SELECT MD FROM movie_details MD JOIN MD.genres MG WHERE MG.name IN :genres GROUP BY MD.movieId HAVING COUNT(DISTINCT MG.name) = :genresCount ORDER BY popularity DESC")
-    Optional<List<MovieDetailEntity>> findByGenres(@Param("genres") List<String> genres,
-            @Param("genresCount") int genresCount);
+        @Query("SELECT MD FROM movie_details MD JOIN MD.genres MG WHERE MG.name IN :genres GROUP BY MD.movieId HAVING COUNT(DISTINCT MG.name) = :genresCount ORDER BY popularity DESC")
+        Optional<List<MovieDetailEntity>> findByGenres(@Param("genres") List<String> genres,
+                        @Param("genresCount") int genresCount);
 
-    // @Query("SELECT md FROM movie_details md JOIN md.genres g WHERE g.name IN
-    // :genres")
-    // Optional<List<MovieDetailEntity>> findByGenres(@Param("genres") List<String>
-    // genres);
+        @Query("SELECT md FROM movie_details md JOIN md.credits.cast c WHERE c.name = :actor")
+        Optional<List<MovieDetailEntity>> findByActors(@Param("actor") String actor);
 
-    @Query("SELECT md FROM movie_details md JOIN md.credits.cast c WHERE c.name = :actor")
-    Optional<List<MovieDetailEntity>> findByActors(@Param("actor") String actor);
+        // 영화명, 배우, 장르로 검색
+        List<MovieDetailEntity> findByTitleContainingOrCredits_Cast_NameOrGenres_Name(String title,
+                        String castName, String genreName);
 
-    // 영화명, 배우, 장르로 검색
-    List<MovieDetailEntity> findByTitleContainingOrCredits_Cast_NameOrGenres_Name(String title,
-            String castName, String genreName);
+        // 비슷한 장르의 영화 추천
+        public List<MovieDetailEntity> findByGenres_NameOrderByReleaseDateDesc(String genre);
 
-    // 비슷한 장르의 영화 추천
-    public List<MovieDetailEntity> findByGenres_NameOrderByReleaseDateDesc(String genre);
-
-    Optional<MovieDetailEntity> findByTitle(String movieNm);
+        Optional<MovieDetailEntity> findByTitle(String movieNm);
 
 }

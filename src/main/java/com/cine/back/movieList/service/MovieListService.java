@@ -47,11 +47,10 @@ public class MovieListService {
             List<String> genreNames = genres.stream()
                     .map(Genre::getName)
                     .collect(Collectors.toList());
-
-            System.out.println("서비스 장르 이름: " + genreNames);// [장르1, 장르2, ...]
-
             Optional<List<MovieDetailEntity>> genresList = movieDetailRepository.findByGenres(genreNames, genresCount);
-            log.info("장르별 영화 조회 성공");
+            if (genresList.isPresent()) {
+                log.info("장르별 영화 조회 성공");
+            }
             return genresList;
         } catch (Exception e) {
             log.error("에러 - 장르별 영화 조회 실패", e);

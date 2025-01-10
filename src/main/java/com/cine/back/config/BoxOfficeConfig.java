@@ -25,7 +25,6 @@ public class BoxOfficeConfig {
     public BoxOfficeMovieResponse getBoxOfficeData() {
         log.info("api - 영화진흥위원회 주간/주말별 인기 상영작 조회 시작");
         String targetDt = DateUtils.getPreviousSundayDate(); // 날짜 설정
-        System.out.println("targetDt: " + targetDt);
 
         UriComponents uriComponents = UriComponentsBuilder
                 .fromHttpUrl(boxOfficeUrl)
